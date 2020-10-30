@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+DOCKER_FILE_LOCATION="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../" >/dev/null 2>&1 && pwd )"
+BASE_DIR="$( cd "${DOCKER_FILE_LOCATION}/../" >/dev/null 2>&1 && pwd )"
+
+. ${BASE_DIR}/.env
+
+echo "== building '$DOCKER_REPO' image based on alpine '$ALPINE_VERSION' with terraform '$TERRAFORM_VERSION'"
+
+docker build \
+  --build-arg ALPINE_VERSION=$ALPINE_VERSION --build-arg TERRAFORM_VERSION=$TERRAFORM_VERSION --build-arg HELM_VERSION=$HELM_VERSION \
+  -f ${DOCKER_FILE_LOCATION}/Dockerfile -t $DOCKER_REPO:alpine-$ALPINE_VERSION-tf$TERRAFORM_VERSION $BASE_DIR
