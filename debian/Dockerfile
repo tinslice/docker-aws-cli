@@ -4,7 +4,7 @@ FROM debian:${DEBIAN_VERSION}
 RUN apt-get update && \
     apt-get install -y \
                     bash bash-completion ca-certificates lsb-release gnupg\
-                    wget curl apt-transport-https git \
+                    wget curl apt-transport-https git python3 \
                     unzip rsync vim tmux less jq gettext xclip xsel
 
 RUN mkdir -p ~/.ssh && chmod 700 ~/.ssh && ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts && \
@@ -13,16 +13,15 @@ RUN mkdir -p ~/.ssh && chmod 700 ~/.ssh && ssh-keyscan -t rsa github.com >> ~/.s
     echo "source <(kubectl completion bash)" > ~/.bashrc_local_after
 
 ARG TERRAFORM_VERSION=0.12.25
-ADD https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip ./
 
 ADD https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip ./
 
 ARG HELM_VERSION=3.2.1
 
-RUN unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /bin && \
+RUN curl -LO https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
+    unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /bin && \
     rm -f terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
-    unzip awscli-exe-linux-x86_64.zip -d /bin && \
-    rm -f awscli-exe-linux-x86_64.zip && \
+    apt-get install -y python3-pip groff && pip3 install awscli --upgrade && \
     curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && \
     chmod +x ./kubectl && \
     mv ./kubectl /usr/local/bin/kubectl && \
