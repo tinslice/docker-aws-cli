@@ -4,7 +4,7 @@
 [![Docker Build Status](https://img.shields.io/docker/cloud/build/tinslice/aws-cli.svg?style=flat)](https://hub.docker.com/r/tinslice/aws-cli/builds)
 [![license](https://img.shields.io/github/license/tinslice/docker-aws-cli.svg)](https://github.com/tinslice/docker-aws-cli)
 
-Docker image with aws cli, terraform, helm and other useful tools
+Docker image with aws cli, terraform, ansible, kubectl, helm and other useful tools.
 
 ## Usage
 

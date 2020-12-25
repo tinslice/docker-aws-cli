@@ -4,7 +4,8 @@ FROM alpine:${ALPINE_VERSION}
 RUN apk add --update --no-cache \
             bash bash-completion ca-certificates gnupg \
             wget curl git openssh-client jq gettext ncurses \
-            unzip rsync vim tmux less xclip python3
+            unzip rsync vim tmux less xclip python3 \
+            groff ansible
 
 RUN mkdir -p ~/.ssh && chmod 700 ~/.ssh && ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts && \
     git clone https://github.com/tinslice/dotfiles.git ~/.dotfiles && \
@@ -14,7 +15,7 @@ RUN mkdir -p ~/.ssh && chmod 700 ~/.ssh && ssh-keyscan -t rsa github.com >> ~/.s
 ARG TERRAFORM_VERSION=0.12.2
 ARG HELM_VERSION=3.2.1
 
-RUN apk add --update --no-cache py3-pip groff && \
+RUN apk add --update --no-cache py3-pip && \
     pip3 install six --upgrade && \
     pip3 install awscli --upgrade && \
     curl -LO https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \

@@ -5,7 +5,8 @@ RUN apt-get update && \
     apt-get install -y \
                     bash bash-completion ca-certificates lsb-release gnupg\
                     wget curl apt-transport-https git python3 \
-                    unzip rsync vim tmux less jq gettext xclip xsel
+                    unzip rsync vim tmux less jq gettext xclip xsel \
+                    dnsutils watch ansible
 
 RUN mkdir -p ~/.ssh && chmod 700 ~/.ssh && ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts && \
     git clone https://github.com/tinslice/dotfiles.git ~/.dotfiles && \
